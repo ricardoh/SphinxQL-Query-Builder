@@ -556,7 +556,8 @@ class SphinxQL
         }
 
         if ( ! empty ($this->raw_match)) {
-            $query .= 'MATCH(' . $this->halfEscapeMatch($this->raw_match) . ') ';
+            $match = trim($this->raw_match);
+            $query .= 'MATCH(\'' . trim($match) . '\') ';
 
         } else if ( ! empty($this->match)) {
             $query .= "MATCH(";
