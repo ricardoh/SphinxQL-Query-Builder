@@ -64,6 +64,13 @@ class SphinxQL
     protected $match = array();
 
     /**
+     * The raw MATCH function
+     *
+     * @var  array
+     */
+    protected $raw_match = null;
+
+    /**
      * GROUP BY array to be comma separated
      *
      * @var  array
@@ -544,11 +551,14 @@ class SphinxQL
     {
         $query = '';
 
-        if ( ! empty($this->match)) {
+        if ( ! empty($this->match) || ! empty($this->raw_match)) {
             $query .= 'WHERE ';
         }
 
-        if ( ! empty($this->match)) {
+        if ( ! empty ($this->raw_match)) {
+            $query .= 'MATCH(' . $this->halfEscapeMatch($this->raw_match) . ') ';
+
+        } else if ( ! empty($this->match)) {
             $query .= "MATCH(";
 
             $pre = '';
@@ -927,6 +937,22 @@ class SphinxQL
     public function match($column, $value, $half = false)
     {
         $this->match[] = array('column' => $column, 'value' => $value, 'half' => $half);
+
+        return $this;
+    }
+
+    /**
+     * MATCH clause (Sphinx-specific)
+     *
+     * @param  string   $column  The column name
+     * @param  string   $value   The value
+     * @param  boolean  $half    Exclude ", |, - control characters from being escaped
+     *
+     * @return  \Foolz\SphinxQL\SphinxQL  The current object
+     */
+    public function raw_match($match)
+    {
+        $this->raw_match = $match;
 
         return $this;
     }
