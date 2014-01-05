@@ -522,7 +522,7 @@ class SphinxQL
      *
      * @return  array  The result of the query
      */
-    public function flushRtIndex($index)
+    public function truncateRtIndex($index)
     {
         return $this->getConnection()->query('TRUNCATE RTINDEX '.$this->getConnection()->quoteIdentifier($index));
     }
