@@ -595,6 +595,8 @@ class SphinxQL
 
         if (empty($this->match) && empty($this->raw_match) && ! empty($this->where)) {
             $query .= 'WHERE ';
+        } else {
+            $query .= 'AND ';
         }
 
         if ( ! empty($this->where)) {
