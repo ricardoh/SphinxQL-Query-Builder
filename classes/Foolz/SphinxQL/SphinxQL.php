@@ -593,7 +593,7 @@ class SphinxQL
     {
         $query = '';
 
-        if (empty($this->match) && ! empty($this->where)) {
+        if (empty($this->match) && empty($this->raw_match) && ! empty($this->where)) {
             $query .= 'WHERE ';
         }
 
