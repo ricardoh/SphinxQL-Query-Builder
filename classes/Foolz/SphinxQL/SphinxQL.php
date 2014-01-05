@@ -516,6 +516,18 @@ class SphinxQL
     }
 
     /**
+     * TRUNCATE RTINDEX syntax
+     *
+     * @param  string  $index
+     *
+     * @return  array  The result of the query
+     */
+    public function flushRtIndex($index)
+    {
+        return $this->getConnection()->query('TRUNCATE RTINDEX '.$this->getConnection()->quoteIdentifier($index));
+    }
+
+    /**
      * Runs the compile function
      *
      * @return  \Foolz\SphinxQL\SphinxQL  The current object
